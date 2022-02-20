@@ -8,13 +8,34 @@ blocks:
   - name: Test
     task:
       jobs:
-        - name: go test web
+        - name: Test web
           commands:
-            - sem-version go 1.17
-            - export GO111MODULE=on
-            - export GOPATH=~/go
-            - 'export PATH=/home/semaphore/go/bin:$PATH'
-            - checkout
-            - go get ./...
             - go test ./...
-            - go build -v ./cmd/web
+      env_vars:
+        - name: GO111MODULE
+          value: 'on'
+        - name: GOFLAGS
+          value: '-mod=vendor'
+      prologue:
+        commands:
+          - sem-version go 1.17
+          - checkout
+          - cache restore
+    dependencies:
+      - Install Dependencies
+  - name: Install Dependencies
+    dependencies: []
+    task:
+      env_vars:
+        - name: GO111MODULE
+          value: 'ON'
+        - name: GOFLAGS
+          value: '-mod=vendor'
+      jobs:
+        - name: Install
+          commands:
+            - sem-version go 1.16
+            - checkout
+            - cache restore
+            - go mod vendor
+            - cache store
