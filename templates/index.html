@@ -1,0 +1,26 @@
+<!-- index.html -->
+
+<!-- Embed the header.html template at this location -->
+{{ template "header.html" . }}
+
+<!-- Loop over the payload variable, which is the list of articles -->
+{{ range .payload }}
+  <div class="card">
+    <!-- Create the link for the article based on its ID -->
+    <div class="card-body">
+      <a href="/article/view/{{.ID }}" style="text-decoration: none">
+        <!-- Display the title of the article -->
+        <h4 class="card-title">
+          {{ .Title }}
+        </h4>
+      </a>
+      <!-- Display the contents of the article -->
+      <p class="card-text">
+        {{ .Content }}
+      </p>
+    </div>
+  </div>
+{{ end }}
+
+<!-- Embed the footer.html template at this location -->
+{{ template "footer.html" . }}
