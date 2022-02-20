@@ -28,7 +28,7 @@ blocks:
     task:
       env_vars:
         - name: GO111MODULE
-          value: 'ON'
+          value: 'on'
         - name: GOFLAGS
           value: '-mod=vendor'
       jobs:
