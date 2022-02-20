@@ -40,3 +40,22 @@ blocks:
             - go mod vendor
             - cache delete vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
             - cache store vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod) vendor/
+  - name: Build
+    dependencies:
+      - Test
+    task:
+      env_vars:
+        - name: GO111MODULE
+          value: 'on'
+        - name: GOFLAGS
+          value: '-mod=vendor'
+      prologue:
+        commands:
+          - sem-version go 1.17
+          - checkout
+          - cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
+      jobs:
+        - name: Build web
+          commands:
+            - go build -v ./cmd/web -o omegapost-web
+            - artifact push project --force omegapost-web
