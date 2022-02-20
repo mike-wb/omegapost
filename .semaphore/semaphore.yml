@@ -57,5 +57,5 @@ blocks:
       jobs:
         - name: Build web
           commands:
-            - go build -v ./cmd/web -o omegapost-web
+            - 'go build -v -o omegapost-web ./cmd/web '
             - artifact push project --force omegapost-web
