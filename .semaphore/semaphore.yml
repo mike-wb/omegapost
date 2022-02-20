@@ -18,9 +18,10 @@ blocks:
           value: '-mod=vendor'
       prologue:
         commands:
-          - sem-version go 1.17
+          - sem-version go 1.16
           - checkout
           - cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
+          - go mod vendor
     dependencies:
       - Install Dependencies
   - name: Install Dependencies
