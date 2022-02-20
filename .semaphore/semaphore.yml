@@ -18,7 +18,7 @@ blocks:
           value: '-mod=vendor'
       prologue:
         commands:
-          - sem-version go 1.16
+          - sem-version go 1.17
           - checkout
           - cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
           - go mod vendor
@@ -35,8 +35,9 @@ blocks:
       jobs:
         - name: Install
           commands:
-            - sem-version go 1.16
+            - sem-version go 1.17
             - checkout
             - cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
             - go mod vendor
+            - cache delete vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
             - cache store vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod) vendor/
