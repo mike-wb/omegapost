@@ -21,7 +21,6 @@ blocks:
           - sem-version go 1.17
           - checkout
           - cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod)
-          - go mod vendor
     dependencies:
       - Install Dependencies
   - name: Install Dependencies
